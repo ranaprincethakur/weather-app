@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="index.css" >
+    <link rel="stylesheet" media="screen and (max-width:520px)" href="phone.css">
+  </head>
+  <body>
+    <!-- <div class="body"> -->
+      <div class="card">
+        <div class="search">
+          <input
+            type="text"
+            placeholder="enter city name"
+            spellcheck="false"
+            value=""
+          />
+          <button><img src="image/img.png" alt="search" /></button>
+        </div>
+        <div class="error">
+          <p>Invalid City name</p>
+        </div>
+        <div class="weather">
+          <img src="" alt="" class="weather-icon" />
+          <p class="condition"></p>
+          <h1 class="temp"></h1>
+          <h2 class="city"></h2>
+          <div class="details">
+            <div class="col">
+              <img src="image/humidity1.png" alt="humidity png" />
+              <div>
+                <p class="humidity"></p>
+                <p>Humidity</p>
+              </div>
+            </div>
+            <div class="col">
+              <img src="image/wind.com" alt="" />
+              <div>
+                <p class="wind"></p>
+                <p>Wind Speed</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+    <script>
+      const apiKey = "ce53c3ff062d4c9381881159233006";
+
+      const apiUrl = "http://api.weatherapi.com/v1/current.json?";
+
+      const searchBox = document.querySelector(".search input");
+
+      const searchBtn = document.querySelector(".search button");
+
+      async function checkweather(city) {
+        const response = await fetch(apiUrl + `key=${apiKey}&q=` + city);
+
+        if (response.status == 400) {
+          document.querySelector(".error").style.display = "block";
+
+          document.querySelector(".weather").style.display="none";
+        } 
+        
+        else {
+          var data = await response.json();
+
+          // console.log(data);
+          
+          document.querySelector(".city").innerHTML = data.location.name;
+
+          document.querySelector(".weather-icon").src =
+            data.current.condition.icon;
+
+          document.querySelector(".condition").innerHTML =
+            data.current.condition.text;
+
+          document.querySelector(".temp").innerHTML =
+            Math.round(data.current.temp_c) + "°C";
+
+          document.querySelector(
+            ".humidity"
+          ).innerHTML = `${data.current.humidity}%`;
+
+          document.querySelector(
+            ".wind"
+          ).innerHTML = `${data.current.wind_kph} km/h`;
+
+          document.querySelector(".weather").style.display="block";
+
+          document.querySelector(".error").style.display="none";
+        }
+      }
+      // checkweather("saharanpur");
+      searchBtn.addEventListener("click", () => {
+        checkweather(searchBox.value);
+      });
+    </script>
+  </body>
+</html>
