@@ -38,5 +38,3 @@ Contributions are welcome! If you find any issues or want to add new features, f
 For any questions or inquiries, please contact princerana.se@gmail.com.
 
 ---
-
-Feel free to customize the README file based on your specific project and requirements. Add more sections if needed, such as deployment instructions, screenshots, or additional features. Make sure to provide clear and concise instructions for users to run and use your weather app effectively.
